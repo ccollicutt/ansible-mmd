@@ -1,6 +1,7 @@
 - name: install proxy file for apt
   template: src=01proxy.j2 dest=/etc/apt/apt.conf.d/01proxy
 
+# FIXME: use module
 - name: install mesosphere repository key
   shell: apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
 
