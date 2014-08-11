@@ -3,7 +3,8 @@
 
 # FIXME: use module
 - name: install mesosphere repository key
-  shell: apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+  #shell: apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
+  apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
 
 - name: setup mesosphere repository
   template: src=mesosphere.j2 dest=/etc/apt/sources.list.d/mesosphere.list
