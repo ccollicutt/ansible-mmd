@@ -1,0 +1,11 @@
+---
+
+- hosts: all
+  roles:
+    - common
+
+- hosts: mesos_masters
+  roles:
+    - zookeeper
+    - mesos
+    - marathon

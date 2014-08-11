@@ -1,0 +1,15 @@
+- name: install required zookeeper packages
+  apt: pkg={{ item }} state=installed update_cache=yes cache_valid_time=3600
+  with_items:
+    - zookeeperd
+
+- name: configure zookeeper id
+  template: src=myid.j2 dest=/etc/zookeeper/conf/myid
+  notify: restart zookeeper
+
+- name: configure zoo.cfg for zookeeper
+  template: src=zoo.j2 dest=/etc/zookeeper/conf/zoo.cfg
+  notify: restart zookeeper
+
+- name: ensure zookeeper is running
+  service: name=zookeeper state=running
