@@ -1,3 +1,7 @@
+#
+# Good example: https://github.com/jplock/devbox/blob/master/roles/mesos/tasks/mesos.yml
+#
+
 - name: install proxy file for apt
   template: src=01proxy.j2 dest=/etc/apt/apt.conf.d/01proxy
 
@@ -6,8 +10,12 @@
   #shell: apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
   apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
 
-- name: setup mesosphere repository
-  template: src=mesosphere.j2 dest=/etc/apt/sources.list.d/mesosphere.list
+#- name: setup mesosphere repository
+#  template: src=mesosphere.j2 dest=/etc/apt/sources.list.d/mesosphere.list
+
+- name: Add Mesos repository
+  apt_repository: repo='deb http://repos.mesosphere.io/ubuntu/ trusty main'
+                  state=present
 
 - name: install required packages
   apt: pkg={{ item }} state=installed update_cache=yes cache_valid_time=3600
