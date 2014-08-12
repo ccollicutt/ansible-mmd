@@ -2,8 +2,11 @@
   template: src=zk.j2 dest=/etc/mesos/zk
   notify: restart mesos-master
 
-- name: setup mesos-master hostname file
-  template: src=mesos-master-hostname.j2 dest=/etc/mesos-master/hostname
+- name: setup mesos-master option files
+  template: src=mesos-master-{{ item }}.j2 dest=/etc/mesos-master/{{ item }}
+  with_items:
+    - hostname
+    - cluster
   notify: restart mesos-master
 
 # FIXME: Maybe config should just be in /etc/mesos-master ala hostname
