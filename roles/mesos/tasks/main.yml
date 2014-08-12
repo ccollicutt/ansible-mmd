@@ -5,7 +5,9 @@
 - name: setup mesos-master hostname file
   template: src=mesos-master-hostname.j2 dest=/etc/mesos-master/hostname
   notify: restart mesos-master
-  
+
+# FIXME: Maybe config should just be in /etc/mesos-master ala hostname
+#        Seems like some env variables aren't picked up in /etc/default...
 - name: configure /etc/default/mesos-master
   template: src=mesos-master.j2 dest=/etc/default/mesos-master
   notify: restart mesos-master

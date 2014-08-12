@@ -11,6 +11,8 @@
 #  when: hostvars[item].ansible_default_ipv4.address is defined
 #  with_items: groups['all']
 
+
+
 - name: install proxy file for apt
   template: src=01proxy.j2 dest=/etc/apt/apt.conf.d/01proxy
 
