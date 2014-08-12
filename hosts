@@ -1,4 +1,4 @@
 [mesos_masters]
-10.3.0.89 zoo_id=1
-10.3.0.90 zoo_id=2
-10.3.0.91 zoo_id=3
+mesos1 ansible_ssh_host=10.3.0.89 zoo_id=1
+mesos2 ansible_ssh_host=10.3.0.90 zoo_id=2
+mesos3 ansible_ssh_host=10.3.0.91 zoo_id=3

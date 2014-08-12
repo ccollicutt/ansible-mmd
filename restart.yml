@@ -1,0 +1,10 @@
+---
+
+- hosts: mesos_masters
+  tasks:
+
+    - service: name={{ item }} state=restarted
+      with_items:
+        - zookeeper
+        - mesos-master
+        - marathon
