@@ -1,14 +1,26 @@
-- name: ensure there is a /etc/marathon directory
-  file: path=/etc/marathon state=directory
+- name: ensure marathon is installed
+  apt: pkg=marathon state=installed update_cache=yes cache_valid_time=3600
+
+- name: ensure /etc/marathon/conf exists
+  file: path=/etc/marathon/conf state=directory recurse=yes
   notify: restart marathon
 
-- name: ensure there is a /var/log/marathon directory
+- name: ensure /var/log/marathon exists
   file: path=/var/log/marathon state=directory
   notify: restart marathon
 
-- name: ensure marathon.conf file is in place
-  template: src=marathon.j2 dest=/etc/marathon/marathon.conf
+# FIXME: Not needed after I figured out that /etc/marathon/marathon.conf is
+#        not read by /usr/local/bin/marathon.
+- name: ensure /etc/marathon/marathon.conf does NOT exist
+  file: path=/etc/marathon/marathon.conf state=absent
+
+- name: configure /etc/marathon/conf/hostname
+  template: src=marathon-conf-hostname.j2 dest=/etc/marathon/conf/hostname
   notify: restart marathon
+
+#- name: configure marathon.conf
+#  template: src=marathon.j2 dest=/etc/marathon/marathon.conf
+#  notify: restart marathon
 
 - name: ensure marathon is running
   service: name=marathon state=running

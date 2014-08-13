@@ -2,39 +2,21 @@
 # Good example: https://github.com/jplock/devbox/blob/master/roles/mesos/tasks/mesos.yml
 #
 
-# Idempotent way to build a /etc/hosts file with Ansible using your Ansible hosts inventory for a source.
-# Will include all hosts the playbook is run on.
-# Inspired from http://xmeblog.blogspot.com/2013/06/ansible-dynamicaly-update-etchosts.html
-
-#- name: create hosts file
-#  lineinfile: dest=/etc/hosts regexp='.*{{ item }}$' line="{{ hostvars[item].ansible_default_ipv4.address }} {{item}}" state=present
-#  when: hostvars[item].ansible_default_ipv4.address is defined
-#  with_items: groups['all']
-
-
-
-- name: install proxy file for apt
+- name: configure apt proxy file
   template: src=01proxy.j2 dest=/etc/apt/apt.conf.d/01proxy
 
-# FIXME: use module
 - name: install mesosphere repository key
-  #shell: apt-key adv --keyserver keyserver.ubuntu.com --recv E56151BF
   apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
 
-#- name: setup mesosphere repository
-#  template: src=mesosphere.j2 dest=/etc/apt/sources.list.d/mesosphere.list
-
-- name: Add Mesos repository
+- name: add mesosphere apt repository
   apt_repository: repo='deb http://repos.mesosphere.io/ubuntu/ trusty main'
                   state=present
 
-- name: install required packages
+# FIXME: move mesos, marathon etc packages out to roles
+- name: install required common packages
   apt: pkg={{ item }} state=installed update_cache=yes cache_valid_time=3600
   with_items:
-    - zookeeperd
     - default-jre
     - python-setuptools
     - python-protobuf
     - curl
-    - mesos
-    - marathon

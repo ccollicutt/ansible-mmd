@@ -1,18 +1,24 @@
+- name: ensure mesos is installed
+  apt: pkg=mesos state=installed update_cache=yes cache_valid_time=3600
+
 - name: configure mesos master zookeeper file
   template: src=zk.j2 dest=/etc/mesos/zk
   notify: restart mesos-master
 
-- name: setup mesos-master option files
+- name: configure mesos-master option files
   template: src=mesos-master-{{ item }}.j2 dest=/etc/mesos-master/{{ item }}
   with_items:
     - hostname
     - cluster
   notify: restart mesos-master
 
+- name: ensure mesos-slave is NOT running
+  service: name=mesos-slave state=stopped enabled=no
+
 # FIXME: Maybe config should just be in /etc/mesos-master ala hostname
 #        Seems like some env variables aren't picked up in /etc/default...
 - name: configure /etc/default/mesos-master
-  template: src=mesos-master.j2 dest=/etc/default/mesos-master
+  template: src=default-mesos-master.j2 dest=/etc/default/mesos-master
   notify: restart mesos-master
 
 - name: ensure mesos-master is running

@@ -1,0 +1,10 @@
+---
+
+- hosts: mm1
+  tasks:
+
+  - name: ensure httpie is installed
+    apt: pkg=httpie state=installed update_cache=yes cache_valid_time=3600
+
+  - name: start marathon sleep test
+    shell: "http POST localhost:8080/v1/apps/start id=sleep cmd='sleep 600' instances=1 mem=128 cpus=1"

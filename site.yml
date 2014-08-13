@@ -5,7 +5,15 @@
     - common
 
 - hosts: mesos_masters
+  # FIXME: Is serial necessary?
+  serial: True
   roles:
     - zookeeper
-    - mesos
+    - mesos-master
     - marathon
+
+- hosts: mesos_slaves
+  # FIXME: Is serial necessary?
+  serial: True
+  roles:
+    - mesos-slave

@@ -1,0 +1,33 @@
+- name: ensure mesos is installed
+  apt: pkg=mesos state=installed update_cache=yes cache_valid_time=3600
+
+- name: ensure mesos-master is NOT running
+  service: name=mesos-master state=stopped enabled=no
+
+# FIXME: zookeeper shouldn't be running on mesos_slaves, double check, may be
+#        a relic from old common packages list
+- name: ensure zookeeper is NOT running
+  service: name=zookeeper state=stopped enabled=no
+  ignore_errors: true
+
+# FIXME: zookeeper shouldn't be installed on mesos-slaves, double check, may be
+#        a relic from old common packages list
+- name: ensure zookeeper is NOT installed
+  apt: pkg=zookeeper state=removed
+
+# FIXME: duplicate, am also doing this in mesos-master, maybe mesos-common?
+- name: configure mesos-slave zk file
+  template: src=zk.j2 dest=/etc/mesos/zk
+  notify: restart mesos-slave
+
+# FIXME: Should hostname be set in /etc/mesos? mesos-common?
+- name: configure /etc/mesos-slave/hostname
+  template: src=mesos-slave-hostname.j2 dest=/etc/mesos-slave/hostname
+  notify: restart mesos-slave
+
+- name: configure /etc/default/mesos-slave
+  template: src=default-mesos-slave.j2 dest=/etc/default/mesos-slave
+  notify: restart mesos-slave
+
+- name: ensure mesos-slave is running
+  service: name=mesos-slave state=running

@@ -1,10 +1,25 @@
 ---
 
 - hosts: mesos_masters
+  serial: True
   tasks:
+    - service: name=zookeeper state=restarted
+    - command: /bin/sleep 2
 
-    - service: name={{ item }} state=restarted
-      with_items:
-        - zookeeper
-        - mesos-master
-        - marathon
+- hosts: mesos_masters
+  serial: True
+  tasks:
+    - service: name=mesos-master state=restarted
+    - command: /bin/sleep 2
+
+- hosts: mesos_masters
+  serial: True
+  tasks:
+    - service: name=marathon state=restarted
+    - command: /bin/sleep 2
+
+- hosts: mesos_slaves
+  serial: True
+  tasks:
+    - service: name=zookeeper state=stopped enabled=no
+    - service: name=mesos-slave state=restarted

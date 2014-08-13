@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 boxes = [
     {
-        :name => :mesos1,
+        :name => :mm1,
         :pubip => '192.168.34.89',
         :privip => '10.3.0.89',
         :box => 'trusty64',
@@ -14,7 +14,7 @@ boxes = [
             { '--memory' => '1536' }
         ],
     },    {
-        :name => :mesos2,
+        :name => :mm2,
         :pubip => '192.168.34.90',
         :privip => '10.3.0.90',
         :box => 'trusty64',
@@ -22,9 +22,25 @@ boxes = [
             { '--memory' => '1536' }
         ],
     },  {
-        :name => :mesos3,
+        :name => :mm3,
         :pubip => '192.168.34.91',
         :privip => '10.3.0.91',
+        :box => 'trusty64',
+        :vbox_config => [
+            { '--memory' => '1536' }
+        ],
+    }, {
+        :name => :ms1,
+        :pubip => '192.168.34.92',
+        :privip => '10.3.0.92',
+        :box => 'trusty64',
+        :vbox_config => [
+            { '--memory' => '1536' }
+        ],
+    }, {
+        :name => :ms2,
+        :pubip => '192.168.34.93',
+        :privip => '10.3.0.93',
         :box => 'trusty64',
         :vbox_config => [
             { '--memory' => '1536' }
@@ -56,24 +72,6 @@ Vagrant.configure("2") do |config|
                     end
                 end
             end
-
-=begin
-        config.vm.provider "virtualbox" do |vb|
-            lfs_disk = "#{opts[:name]}" + ".vdi"
-            unless File.exist?(lfs_disk)
-                vb.customize ['createhd', '--filename', lfs_disk, '--size', 20 * 1024]
-            end
-             vb.customize ['storageattach', :id, '--storagectl', \
-               'SATAController', '--port', 1, '--device', 0, '--type', \
-               'hdd', '--medium', lfs_disk]
-        end
-
-
-        config.vm.provision "ansible" do |ansible|
-            ansible.playbook = "playbook/site.yml"
-            ansible.host_key_checking = false
-        end
-=end
     end
 
 

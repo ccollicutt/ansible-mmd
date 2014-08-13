@@ -1,0 +1,2 @@
+- name: restart mesos-slave
+  service: name=mesos-slave state=restarted
