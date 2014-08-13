@@ -21,9 +21,13 @@
   notify: restart mesos-slave
 
 # FIXME: Should hostname be set in /etc/mesos? mesos-common?
-- name: configure /etc/mesos-slave/hostname
-  template: src=mesos-slave-hostname.j2 dest=/etc/mesos-slave/hostname
+# FIXME: Should be lineinefile?
+- name: configure /etc/mesos-slave/*
+  template: src=mesos-slave-{{ item }}.j2 dest=/etc/mesos-slave/{{ item }}
   notify: restart mesos-slave
+  with_items:
+    - hostname
+    - isolation
 
 - name: configure /etc/default/mesos-slave
   template: src=default-mesos-slave.j2 dest=/etc/default/mesos-slave
