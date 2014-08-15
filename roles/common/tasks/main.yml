@@ -20,3 +20,4 @@
     - python-setuptools
     - python-protobuf
     - curl
+    - zip

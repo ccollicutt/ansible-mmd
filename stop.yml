@@ -1,0 +1,28 @@
+---
+
+- hosts: mesos_slaves
+  serial: True
+  tasks:
+    - service: name=mesos-slave state=stopped
+    - command: /bin/sleep 2
+
+- hosts: mesos_masters
+  serial: True
+  tasks:
+    - service: name=marathon state=stopped
+    - command: /bin/sleep 2
+
+- hosts: mesos_masters
+  serial: True
+  tasks:
+    - service: name=mesos-master state=stopped
+    - command: /bin/sleep 2
+
+- hosts: mesos_masters
+  serial: True
+  tasks:
+    - service: name=zookeeper state=stopped
+    - command: /bin/sleep 2
+    - command: /sbin/halt
+
+# FIXME: check if they are halted?

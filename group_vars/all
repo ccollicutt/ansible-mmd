@@ -1,3 +1,7 @@
 package_cache_server: 10.10.10.10
 
 mesos_cluster_name: mycluster
+
+marathon_http_credentials: "admin:passw0rd"
+
+provisioner: "openstack"

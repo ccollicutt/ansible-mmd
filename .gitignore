@@ -1,2 +1,5 @@
 .vagrant
 .DS_store
+group_vars/openstack*
+nova.ini
+group_vars/all

@@ -9,3 +9,7 @@ mm3 ansible_ssh_host=10.3.0.91 zoo_id=3
 [mesos_slaves]
 ms1 ansible_ssh_host=10.3.0.92
 ms2 ansible_ssh_host=10.3.0.93
+ms3 ansible_ssh_host=10.3.0.94
+
+[openstack_instances]
+mm1

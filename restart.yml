@@ -21,5 +21,6 @@
 - hosts: mesos_slaves
   serial: True
   tasks:
+    # FIXME: Shouldn't have to be stopping zookeeper
     - service: name=zookeeper state=stopped enabled=no
     - service: name=mesos-slave state=restarted

@@ -46,6 +46,15 @@ boxes = [
             { '--memory' => '1536' }
         ],
     },
+    {
+      :name => :ms3,
+      :pubip => '192.168.34.94',
+      :privip => '10.3.0.94',
+      :box => 'trusty64',
+      :vbox_config => [
+          { '--memory' => '1536' }
+      ],
+  },
 ]
 
 Vagrant.configure("2") do |config|

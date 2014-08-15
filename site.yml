@@ -1,5 +1,11 @@
 ---
 
+- hosts: openstack_instances
+  connection: local
+  sudo: false
+  roles:
+    - provision_openstack
+
 - hosts: all
   roles:
     - common
