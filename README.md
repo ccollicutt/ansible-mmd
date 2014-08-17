@@ -25,7 +25,7 @@ The slaves run:
 * deimos
 * docker
 * http server to grab zip files from to launch applications?
-* provisioning w openstack (see [this](https://github.com/lukaspustina/dynamic-inventory-for-ansible-with-openstack/blob/master/openstack_inventory.py)
+* provisioning w openstack (see [this](https://github.com/lukaspustina/dynamic-inventory-for-ansible-with-openstack/blob/master/openstack_inventory.py))
 
 ##Issues
 
