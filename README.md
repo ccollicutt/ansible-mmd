@@ -25,6 +25,7 @@ The slaves run:
 * deimos
 * docker
 * http server to grab zip files from to launch applications?
+<<<<<<< HEAD
 * create system in openstack environment
 
 ##OpenStack
@@ -45,6 +46,9 @@ host openstack-gw
 host 10.2.*.*
    ProxyCommand ssh -q rac-gw netcat %h 22
 ```
+
+* provisioning w openstack (see [this](https://github.com/lukaspustina/dynamic-inventory-for-ansible-with-openstack/blob/master/openstack_inventory.py))
+
 
 ##Issues
 
