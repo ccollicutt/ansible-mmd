@@ -83,9 +83,6 @@ host 10.2.*.*
    ProxyCommand ssh -q openstack-gw netcat %h 22
 ```
 
-* provisioning w openstack (see [this](https://github.com/lukaspustina/dynamic-inventory-for-ansible-with-openstack/blob/master/openstack_inventory.py))
-
-
 ##Issues
 
 * set quorum to 2 with three masters? "If quorum is 2, you should have 3 masters"
