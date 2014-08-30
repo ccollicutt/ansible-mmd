@@ -1,1 +1,1 @@
-zk://10.3.0.89:2181,10.3.0.90:2181,10.3.0.91:2181/mesos
+zk://{% for host in groups['mesos_masters'] %}{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:2181{% if not loop.last %},{% endif %}{% endfor %}/mesos

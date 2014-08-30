@@ -1,15 +1,7 @@
-# mm - mesos master
-# ms - mesos slave
-
-[mesos_masters]
-mm1 ansible_ssh_host=10.3.0.89 zoo_id=1
-mm2 ansible_ssh_host=10.3.0.90 zoo_id=2
-mm3 ansible_ssh_host=10.3.0.91 zoo_id=3
-
-[mesos_slaves]
-ms1 ansible_ssh_host=10.3.0.92
-ms2 ansible_ssh_host=10.3.0.93
-ms3 ansible_ssh_host=10.3.0.94
-
 [openstack_instances]
-mm1
+mm1 flavor_id=2 group=mesos_masters
+mm2 flavor_id=2 group=mesos_masters
+mm3 flavor_id=2 group=mesos_masters
+ms1 flavor_id=2 group=mesos_slaves
+ms2 flavor_id=2 group=mesos_slaves
+ms3 flavor_id=2 group=mesos_slaves

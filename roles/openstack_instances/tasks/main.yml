@@ -1,0 +1,33 @@
+---
+
+#
+# Create mesos instances in openstack
+#
+
+- name: ensure instance exists in openstack
+  nova_compute:
+    state: present
+    login_username: "{{ os_username }}"
+    login_password: "{{ os_password }}"
+    login_tenant_name: "{{ os_tenant_name }}"
+    auth_url: "{{ os_auth_url }}"
+    region_name: "{{ os_region_name }}"
+    name: "{{ inventory_hostname }}"
+    image_id: "{{ os_image_id }}"
+    key_name: "{{ os_key_name }}"
+    flavor_id: "{{ flavor_id }}"
+    security_groups: default
+  register: nova
+  #ignore_errors: True
+
+- name: add the instance to the in-memory inventory
+  add_host: name={{ inventory_hostname }}
+  #when: nova.changed
+
+# You may need to change "private" depending on your host; some clouds name it
+# differently.
+- set_fact: ansible_ssh_host={{ nova.info.addresses.cybera[0].addr }}
+  #when: nova.changed
+
+- pause: seconds=30
+  when: nova.changed

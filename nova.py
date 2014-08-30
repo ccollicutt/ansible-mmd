@@ -27,7 +27,6 @@ def get_config():
         return None
     return p
 
-
 def add_meta(vm_name, inventory, group, ip):
 
     if not vm_name in inventory[group]:
@@ -39,6 +38,7 @@ def add_meta(vm_name, inventory, group, ip):
 
 def get_inventory(client, inventory):
 
+    # FIXME: where to get groups
     groups = [ 'undefined']
 
     for group in groups:
@@ -74,7 +74,7 @@ def get_inventory(client, inventory):
         if len(ip) < 16:
           add_meta(f.name, inventory, group, ip)
 
-      # Return server list
+    # Return updated inventory
     return inventory
 
 
@@ -98,9 +98,8 @@ def main(args):
   inventory['_meta'] = {}
   inventory['_meta']['hostvars'] = {}
 
-
   if len(sys.argv) == 2 and (sys.argv[1] == '--list'):
-    inventory = get_inventory(client, inventory )
+    inventory = get_inventory(client, inventory)
     if inventory:
       print json.dumps(inventory)
   else:

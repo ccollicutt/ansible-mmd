@@ -4,6 +4,7 @@
 
 - name: configure apt proxy file
   template: src=01proxy.j2 dest=/etc/apt/apt.conf.d/01proxy
+  when: provisioner != "openstack"
 
 - name: install mesosphere repository key
   apt_key: id=E56151BF keyserver=keyserver.ubuntu.com state=present
@@ -12,7 +13,6 @@
   apt_repository: repo='deb http://repos.mesosphere.io/ubuntu/ trusty main'
                   state=present
 
-# FIXME: move mesos, marathon etc packages out to roles
 - name: install required common packages
   apt: pkg={{ item }} state=installed update_cache=yes cache_valid_time=3600
   with_items:

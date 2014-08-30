@@ -19,11 +19,6 @@ clientPort=2181
 # specify all zookeeper servers
 # The fist port is used by followers to connect to the leader
 # The second one is used for leader election
-# FIXME: is this necessary? to list the servers? -- curtis
-server.1=10.3.0.89:2888:3888
-server.2=10.3.0.90:2888:3888
-server.3=10.3.0.91:2888:3888
-
 
 # To avoid seeks ZooKeeper allocates space in the transaction log file in
 # blocks of preAllocSize kilobytes. The default block size is 64M. One reason

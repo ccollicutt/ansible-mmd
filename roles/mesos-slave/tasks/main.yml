@@ -28,6 +28,7 @@
   with_items:
     - hostname
     - isolation
+    - containerizers
 
 - name: configure /etc/default/mesos-slave
   template: src=default-mesos-slave.j2 dest=/etc/default/mesos-slave

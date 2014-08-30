@@ -4,7 +4,7 @@
   serial: True
   tasks:
     - service: name=zookeeper state=restarted
-    - command: /bin/sleep 2
+    - command: /bin/sleep 10
 
 - hosts: mesos_masters
   serial: True

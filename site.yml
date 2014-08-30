@@ -1,10 +1,11 @@
 ---
 
 - hosts: openstack_instances
+  serial: true
   connection: local
   sudo: false
   roles:
-    - provision_openstack
+    - openstack_instances
 
 - hosts: all
   roles:
@@ -23,3 +24,4 @@
   serial: True
   roles:
     - mesos-slave
+    - docker

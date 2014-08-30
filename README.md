@@ -1,40 +1,76 @@
 # Ansible MMDD - Mesos, Marathon, Deimos and Docker
 
-A work-in-progress for setting up a quick vagrant and ansible based apache mesos and marathon installation.
+A work-in-progress for setting up a quick Vagrant||OpenStack and Ansible-based Apache Mesos, Marathon, and Docker installation.
 
 The masters run:
 
-* zookeeper
-* mesos-master
-* marathon
+* Zookeeper
+* Mesos-master
+* Marathon
 
 The slaves run:
 
-* mesos-slave
+* Mesos-slave
+* Docker
+
+##Requirements
+
+###If using OpenStack
+
+* [shooz](https://github.com/curtisgithub/shooz) - The shooz Ansible inventory script is required if using OpenStack instead of Vagrant to provision the virtual machines.
 
 ##Notes
 
-* Hardcoded IPs based on what is in the Vagrantfile
-* Assumes an apt-cacher-ng proxycd
+* Vagrant - Hardcoded IPs based on what is in the Vagrantfile
+* Vagrant - Assumes an apt-cacher-ng proxy
 
 ##Todo
 
+* OpenStack - configure gw as an apt-cache?
+* OpenStack - configure gw
+* OpenStack - security groups: allow 5050, 8080, 2181 tcp
+* DONE: Deploy to OpenStack private cloud
+* Setup ability to use right eth interface whether openstack or vagrant (logic in templates?)
 * DONE: mesos (zookeeper) + marathon
 * DONE: enable cgroups in mesos
 * Marathon authentication? (And marathon authenticate to mesos?) - "--http_credentials user:pass"
-* deimos
 * docker
 * http server to grab zip files from to launch applications?
-<<<<<<< HEAD
-* create system in openstack environment
+* /var/log/marathon probably isn't being used
+* [java heap size for zookeeper?](http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html)
+* cgroups config:
+
+```bash
+W0820 21:19:03.126446  8711 mesos_containerizer.cpp:116] The 'cgroups' isolation flag is deprecated, please update your flags to '--isolation=cgroups/cpu,cgroups/mem'.
+```
 
 ##OpenStack
 
-If you are creating instances using OpenStack instead of Vagrant, then there is a nova.py inventory script to use.
+### Security groups
 
-This will require a nova.ini file that is filled out with your OpenStack credentials. You can use the nova.ini.example file to fill it out, then copy that file to nova.ini. The nova.py script will use it.
+Ensure security groups are open so that the servers can talk to one another on ports: 5050, 8080, 2181, and 5051. I'm sure you could tighten that down a little in a production environment. I've at least limited those ports to the OpenStack private network.
 
-###Ssh proxy
+Also you will likely need to open the marathon default ports.
+
+Eg.
+
+```bash
+curtis$ nova secgroup-list-rules default
++-------------+-----------+---------+-------------+--------------+
+| IP Protocol | From Port | To Port | IP Range    | Source Group |
++-------------+-----------+---------+-------------+--------------+
+| icmp        | -1        | -1      | 0.0.0.0/0   |              |
+| tcp         | 80        | 80      | 0.0.0.0/0   |              |
+| tcp         | 3389      | 3389    | 0.0.0.0/0   |              |
+| tcp         | 22        | 22      | 0.0.0.0/0   |              |
+| tcp         | 5050      | 5050    | 10.2.0.0/20 |              |
+| tcp         | 8080      | 8080    | 10.2.0.0/20 |              |
+| tcp         | 2181      | 2181    | 10.2.0.0/20 |              |
+| tcp         | 5051      | 5051    | 10.2.0.0/20 |              |
++-------------+-----------+---------+-------------+--------------+
+```
+
+###ssh proxy
 
 Ensure netcat-tradititional is installed on the openstack-gw (assuming it's Ubuntu 14.04).
 

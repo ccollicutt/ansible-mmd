@@ -1,0 +1,15 @@
+---
+
+- name: ensure docker repository gpg key is installed
+  apt_key: url="https://get.docker.io/gpg" id="A88D21E9"
+
+- name: ensure the docker repository is installed
+  apt_repository:
+    repo: 'deb http://get.docker.io/ubuntu docker main'
+    update_cache: yes
+
+- name: ensure docker is installed
+  apt: pkg=lxc-docker state=installed
+
+- name: ensure docker is running
+  service: name=docker state=running

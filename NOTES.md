@@ -14,6 +14,36 @@ vagrant@ms2:/tmp/mesos/slaves/20140813-233541-1493173002-5050-1380-1/frameworks/
 * Examples: https://github.com/mesosphere/marathon/tree/master/examples
 * With Play: http://typesafe.com/blog/play-framework-grid-deployment-with-mesos
 
+###Example application
+
+```bash
+{
+  "id": "http",
+  "cmd": "python -m SimpleHTTPServer $PORT",
+  "mem": 50,
+  "cpus": 0.1,
+  "instances": 1,
+  "constraints": [
+    ["hostname", "UNIQUE"]
+  ]
+}
+```
+
+curl -i -H 'Content-Type: application/json' -d @example.json localhost:8080/v2/apps
+
+From the master, run something like:
+
+```bash
+root@mm2:~# curl -i -H 'Content-Type: application/json' -d @example.json localhost:8080/v2/apps
+HTTP/1.1 201 Created
+Location: http://localhost:8080/v2/apps/http
+Content-Type: application/json
+Transfer-Encoding: chunked
+Server: Jetty(8.y.z-SNAPSHOT)
+
+nullroot@mm2:~#
+```
+
 ###Launching tasks
 
 Apparently can use mesos-execute?
@@ -55,6 +85,12 @@ vagrant@ms1:~$ ps xawf -eo pid,user,cgroup,args | tail
 4:cpuacct:/mesos/3942c250-3d15-4984-9210-a93a280a35bb
 3:cpu:/mesos/3942c250-3d15-4984-9210-a93a280a35bb
 2:name=systemd:/
+```
+
+##Mesos-slaves
+
+```bash
+Aug 20 21:49:45 mm2 mesos-master[8937]: W0820 21:49:45.139228  8957 master.cpp:2745] Shutting down slave 20140820-205713-2130706954-5050-8937-59 at slave(1)@10.2.0.160:5051 (10.2.0.160) with message 'health check timed out'
 ```
 
 ##Zookeeper

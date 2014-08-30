@@ -1,4 +1,4 @@
 # from: https://github.com/ahunnargikar/vagrant-mesos/blob/master/marathon/marathon.conf
-ZKMASTER="--master zk://10.3.0.89:2181,10.3.0.90:2181,10.3.0.91:2181/mesos"
-ZKHOSTS="--zk_hosts zk://10.3.0.89:2181,10.3.0.90:2181,10.3.0.91:2181"
-OPTIONS="--checkpoint --ha --zk_timeout 30000 --hostname={{ ansible_eth2.ipv4.address }}"
+ZKMASTER="--master zk://{% for host in groups['mesos_masters'] %}{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:2181{% if not loop.last %},{% endif %}{% endfor %}/mesos"
+ZKHOSTS="--zk_hosts zk://{% for host in groups['mesos_masters'] %}{{ hostvars[host]['ansible_eth0']['ipv4']['address'] }}:2181{% if not loop.last %},{% endif %}{% endfor %}"
+OPTIONS="--checkpoint --ha --zk_timeout 30000 --hostname={{ ansible_eth0.ipv4.address }}"
