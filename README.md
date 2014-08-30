@@ -1,4 +1,4 @@
-# Ansible MMDD - Mesos, Marathon, Deimos and Docker
+# Ansible MMDD - Mesos, Marathon, and Docker
 
 A work-in-progress for setting up a quick Vagrant||OpenStack and Ansible-based Apache Mesos, Marathon, and Docker installation.
 
@@ -38,7 +38,7 @@ The slaves run:
 * http server to grab zip files from to launch applications?
 * /var/log/marathon probably isn't being used
 * [java heap size for zookeeper?](http://zookeeper.apache.org/doc/r3.1.2/zookeeperAdmin.html)
-* cgroups config:
+* DONE: cgroups config:
 
 ```bash
 W0820 21:19:03.126446  8711 mesos_containerizer.cpp:116] The 'cgroups' isolation flag is deprecated, please update your flags to '--isolation=cgroups/cpu,cgroups/mem'.
@@ -80,7 +80,7 @@ host openstack-gw
    User ubuntu
 # Where 10.2.*.* is your tenant/project private ip space
 host 10.2.*.*
-   ProxyCommand ssh -q rac-gw netcat %h 22
+   ProxyCommand ssh -q openstack-gw netcat %h 22
 ```
 
 * provisioning w openstack (see [this](https://github.com/lukaspustina/dynamic-inventory-for-ansible-with-openstack/blob/master/openstack_inventory.py))
