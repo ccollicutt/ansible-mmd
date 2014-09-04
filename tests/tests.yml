@@ -1,0 +1,56 @@
+---
+
+- hosts: mesos_masters
+  tasks:
+    - name: check zookeeper status
+      shell: echo ruok | nc localhost 2181
+      register: zookeeper_status
+      failed_when: zookeeper_status.stdout != "imok"
+      changed_when: False
+    - debug: msg="{{ zookeeper_status.stdout }}"
+    - name: check zookeeper stats
+      shell: echo stat | nc localhost 2181
+      register: zookeeper_stats
+      failed_when: not zookeeper_stats.stdout
+      changed_when: False
+    - debug: msg="{{ zookeeper_stats.stdout }}"
+    - name: curl stats.json
+      shell: "curl {{ ansible_eth0.ipv4.address }}:5050/stats.json | python -mjson.tool | grep \"elected\""
+      register: stats_json
+      changed_when: False
+    - name: find zookeeper leader
+      shell: echo srvr | nc localhost 2181
+      register: zookeeper_srvr
+      changed_when: False
+    - debug: msg={{ zookeeper_srvr.stdout }}
+    - name: find zookeeper instance mode
+      shell: "echo stat | nc localhost 2181 | grep Mode | cut -f 2 -d \" \""
+      register: zookeeper_mode
+      changed_when: False
+    - debug: msg="{{ ansible_eth0.ipv4.address }} is a zookeeper {{ zookeeper_mode.stdout }}"
+    - debug: msg="{{ stats_json.stdout }}"
+
+    #
+    # Mesos! Setup some mesos facts. Not sure if this is the right way to do this
+    #
+
+    - mesos_facts: ip={{ ansible_eth0.ipv4.address }}
+      tags: test
+#    - debug: var=hostvars[inventory_hostname]
+#      tags: test
+    - debug: msg="{{ inventory_hostname }} with ip {{ ansible_eth0.ipv4.address }} is mesos master and has {{ mesos.activated_slaves }} active slaves"
+      when: mesos.elected == True
+      tags: test
+    - debug: msg="Total cpus = {{ mesos.master_cpus_total  }} and memory is {{ mesos.mem_total }}"
+      tags: test
+      when: mesos.elected == True
+
+
+#- hosts: mm1
+#  tasks:
+
+#  - name: ensure httpie is installed
+#    apt: pkg=httpie state=installed update_cache=yes cache_valid_time=3600
+
+#  - name: start marathon sleep test
+#    shell: "http POST localhost:8080/v1/apps/start id=sleep cmd='sleep 600' instances=1 mem=128 cpus=1"

@@ -21,6 +21,13 @@ The slaves run:
 
 ##Notes
 
+* Each Mesos master must have a host_var entry with a unique zoo_id variable.
+
+```bash
+curtis$ cat host_vars/mm3
+zoo_id: 3
+```
+
 * Vagrant - Hardcoded IPs based on what is in the Vagrantfile
 * Vagrant - Assumes an apt-cacher-ng proxy
 
@@ -52,7 +59,7 @@ Ensure security groups are open so that the servers can talk to one another on p
 
 Also you will likely need to open the marathon default ports.
 
-Eg.
+Example shown below, where the private network is 10.2.0.0/20.
 
 ```bash
 curtis$ nova secgroup-list-rules default
@@ -60,13 +67,14 @@ curtis$ nova secgroup-list-rules default
 | IP Protocol | From Port | To Port | IP Range    | Source Group |
 +-------------+-----------+---------+-------------+--------------+
 | icmp        | -1        | -1      | 0.0.0.0/0   |              |
-| tcp         | 80        | 80      | 0.0.0.0/0   |              |
-| tcp         | 3389      | 3389    | 0.0.0.0/0   |              |
 | tcp         | 22        | 22      | 0.0.0.0/0   |              |
 | tcp         | 5050      | 5050    | 10.2.0.0/20 |              |
 | tcp         | 8080      | 8080    | 10.2.0.0/20 |              |
 | tcp         | 2181      | 2181    | 10.2.0.0/20 |              |
 | tcp         | 5051      | 5051    | 10.2.0.0/20 |              |
+| tcp         | 31000     | 32000   | 10.2.0.0/20 |              |
+| tcp         | 2888      | 2888    | 10.2.0.0/20 |              |
+| tcp         | 3888      | 3888    | 10.2.0.0/20 |              |
 +-------------+-----------+---------+-------------+--------------+
 ```
 

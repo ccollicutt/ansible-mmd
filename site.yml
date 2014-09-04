@@ -13,7 +13,7 @@
 
 - hosts: mesos_masters
   # FIXME: Is serial necessary?
-  serial: True
+  #serial: True
   roles:
     - zookeeper
     - mesos-master
@@ -21,7 +21,9 @@
 
 - hosts: mesos_slaves
   # FIXME: Is serial necessary?
-  serial: True
+  #serial: True
   roles:
     - mesos-slave
     - docker
+
+- include: tests/tests.yml

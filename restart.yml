@@ -1,22 +1,49 @@
 ---
 
+#
+# Stop
+#
+
+- hosts: mesos_masters
+  tasks:
+    - service: name=marathon state=stopped
+
+- hosts: mesos_masters
+  tasks:
+    - service: name=mesos-master state=stopped
+    - command: /bin/sleep 2
+
+- hosts: mesos_masters
+  tasks:
+    - service: name=zookeeper state=stopped
+    - command: /bin/sleep 2
+
+- hosts: mesos_slaves
+  tasks:
+    - service: name=mesos-slave state=stopped
+    - command: /bin/sleep 2
+
+#
+# Start
+#
+
 - hosts: mesos_masters
   serial: True
   tasks:
-    - service: name=zookeeper state=restarted
+    - service: name=zookeeper state=running
     - command: /bin/sleep 10
 
 - hosts: mesos_masters
   serial: True
   tasks:
-    - service: name=mesos-master state=restarted
-    - command: /bin/sleep 2
+    - service: name=mesos-master state=running
+    - command: /bin/sleep 10
 
 - hosts: mesos_masters
   serial: True
   tasks:
-    - service: name=marathon state=restarted
-    - command: /bin/sleep 2
+    - service: name=marathon state=running
+    - command: /bin/sleep 10
 
 - hosts: mesos_slaves
   serial: True

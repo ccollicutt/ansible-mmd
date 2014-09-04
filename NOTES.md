@@ -10,9 +10,19 @@ vagrant@ms2:/tmp/mesos/slaves/20140813-233541-1493173002-5050-1380-1/frameworks/
 
 ##Marathon
 
+* Docs: https://mesosphere.github.io/marathon/docs/
+
 * Lots of options show here: https://github.com/mdsol/marathon_cookbook
 * Examples: https://github.com/mesosphere/marathon/tree/master/examples
 * With Play: http://typesafe.com/blog/play-framework-grid-deployment-with-mesos
+
+###Commands
+
+Check what host is master?
+
+```bash
+curtis$ ansible -m shell -a "mesos-resolve zk://localhost:2181/mesos" -i shooz.py mesos_masters
+```
 
 ###Example application
 
@@ -96,6 +106,62 @@ Aug 20 21:49:45 mm2 mesos-master[8937]: W0820 21:49:45.139228  8957 master.cpp:2
 ##Zookeeper
 
 * http://zookeeper.apache.org/doc/trunk/zookeeperAdmin.html#sc_administering
+
+###Commands
+
+```bash
+ubuntu@mm2:~$ echo stat | nc localhost 2181
+Zookeeper version: 3.4.5--1, built on 06/10/2013 17:26 GMT
+Clients:
+ /10.2.1.32:58425[1](queued=0,recved=81,sent=81)
+ /127.0.0.1:39108[0](queued=0,recved=1,sent=0)
+ /10.2.1.32:58424[1](queued=0,recved=80,sent=80)
+
+Latency min/avg/max: 0/0/16
+Received: 167
+Sent: 166
+Connections: 3
+Outstanding: 0
+Zxid: 0x87
+Mode: standalone
+Node count: 11
+```
+
+###zkCli.sh
+
+```bash
+root@mm2:/home/ubuntu# /usr/share/zookeeper/bin/zkCli.sh
+Connecting to localhost:2181
+Welcome to ZooKeeper!
+JLine support is enabled
+
+WATCHER::
+
+WatchedEvent state:SyncConnected type:None path:null
+[zk: localhost:2181(CONNECTED) 0] help
+ZooKeeper -server host:port cmd args
+	connect host:port
+	get path [watch]
+	ls path [watch]
+	set path data [version]
+	rmr path
+	delquota [-n|-b] path
+	quit
+	printwatches on|off
+	create [-s] [-e] path data acl
+	stat path [watch]
+	close
+	ls2 path [watch]
+	history
+	listquota path
+	setAcl path acl
+	getAcl path
+	sync path
+	redo cmdno
+	addauth scheme auth
+	delete path [version]
+	setquota -n|-b val path
+```
 
 ##Service Discovery
 
