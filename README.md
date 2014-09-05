@@ -18,6 +18,8 @@ The slaves run:
 ###If using OpenStack
 
 * [shooz](https://github.com/curtisgithub/shooz) - The shooz Ansible inventory script is required if using OpenStack instead of Vagrant to provision the virtual machines.
+* [mesos_facts](https://github.com/curtisgithub/ansible-mesos_facts-module) - Should be in ./library/mesos_facts
+
 
 ##Notes
 
@@ -33,6 +35,7 @@ zoo_id: 3
 
 ##Todo
 
+* *git subtree* for shooz and mesos_facts
 * OpenStack - configure gw as an apt-cache?
 * OpenStack - configure gw
 * OpenStack - security groups: allow 5050, 8080, 2181 tcp
