@@ -41,10 +41,9 @@
     - debug: msg="{{ inventory_hostname }} with ip {{ ansible_eth0.ipv4.address }} is mesos master and has {{ mesos.activated_slaves }} active slaves"
       when: mesos.elected == True
       tags: test
-    - debug: msg="Total cpus = {{ mesos.master_cpus_total  }} and memory is {{ mesos.mem_total }}"
+    - debug: msg="Total cpus = {{ mesos.master_cpus_total }} and memory is {{ mesos.mem_total }}"
       tags: test
       when: mesos.elected == True
-
 
 #- hosts: mm1
 #  tasks:

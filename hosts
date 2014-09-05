@@ -1,4 +1,6 @@
 [openstack_instances]
+gw  flavor_id=1 group=gateways
+# some comment
 mm1 flavor_id=2 group=mesos_masters
 mm2 flavor_id=2 group=mesos_masters
 mm3 flavor_id=2 group=mesos_masters
