@@ -17,8 +17,8 @@ The slaves run:
 
 ###If using OpenStack
 
-* [shooz](https://github.com/curtisgithub/shooz) - The shooz Ansible inventory script is required if using OpenStack instead of Vagrant to provision the virtual machines.
-* [mesos_facts](https://github.com/curtisgithub/ansible-mesos_facts-module) - Should be in ./library/mesos_facts
+* [shooz](https://github.com/curtisgithub/shooz) - The shooz Ansible inventory script is required if using OpenStack instead of Vagrant to provision the virtual machines. Just link it in for now to the root of the playbook.
+* [mesos_facts](https://github.com/curtisgithub/ansible-mesos_facts-module) - Should be in ./library/mesos_facts. Just link it in for now.
 
 
 ##Notes
